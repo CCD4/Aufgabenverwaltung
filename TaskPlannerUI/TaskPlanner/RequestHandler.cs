@@ -12,24 +12,24 @@ namespace TaskPlanner
             dbProvider = new MemoryDBProvider();
         }
 
-        public ReplyLoadFiltered AufgabeLaden(RequestLoadFiltered request)
+        public ReplyLoadFiltered LoadTasks(RequestLoadFiltered request)
         {
             string[] tags = ParseQuery(request.Filter);
-            var aufgaben = dbProvider.AufgabenLaden(tags);
-            var aufgabenInfos = Map(aufgaben);
+            var tasks = dbProvider.LoadTasks(tags);
+            var taskInfos = Map(tasks);
             return new ReplyLoadFiltered
             {
                 Filter = request.Filter,
-                AufgabeInfos = aufgabenInfos
+                TaskInfos = taskInfos
             };
         }
 
-        private AufgabeInfo[] Map(Aufgabe[] aufgaben)
+        private TaskInfo[] Map(Task[] tasks)
         {
-            return aufgaben.Select(aufgabe => new AufgabeInfo
+            return tasks.Select(task => new TaskInfo
             {
-                Text = aufgabe.Text,
-                Done = aufgabe.Done
+                Text = task.Text,
+                Done = task.Done
             }).ToArray();
         }
 
@@ -39,10 +39,10 @@ namespace TaskPlanner
             return tags.Select(t => '#' + t).ToArray();
         }
 
-        public ReplayLoadTags TagsLaden(RequestLoadTags request)
+        public ReplayLoadTags LoadTags(RequestLoadTags request)
         {
-            var tags = dbProvider.TagsLaden();
-            return new ReplayLoadTags {Tags = tags.Select(t => new Tag {Text=t}).ToArray()};
+            var tags = dbProvider.LoadTags();
+            return new ReplayLoadTags {Tags = tags.ToArray()};
         }
     }
 

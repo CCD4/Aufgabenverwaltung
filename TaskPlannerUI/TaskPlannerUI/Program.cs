@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using TaskPlanner;
 
@@ -18,26 +15,25 @@ namespace TaskPlannerUI
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            var taskPlannerAufgabenForm = new TaskPlannerAufgabenForm();
+            var taskPlannerMainForm = new TaskPlannerMainForm();
             RequestHandler requestHandler = new RequestHandler();
 
-            taskPlannerAufgabenForm.AufgabenViewRequested += request =>
+            taskPlannerMainForm.TaskViewRequested += request =>
             {
-                var reply = requestHandler.AufgabeLaden(request);
-                taskPlannerAufgabenForm.AufgabeAnzeigen(reply);
-
+                var reply = requestHandler.LoadTasks(request);
+                taskPlannerMainForm.ShowTasks(reply);
             };
 
-            taskPlannerAufgabenForm.TagsViewRequested += request =>
+            taskPlannerMainForm.TagsViewRequested += request =>
             {
-                var reply = requestHandler.TagsLaden(request);
-                taskPlannerAufgabenForm.TagsAnzeigen(reply);
+                var reply = requestHandler.LoadTags(request);
+                taskPlannerMainForm.ShowTags(reply);
             };
 
-            var initialReply = requestHandler.AufgabeLaden(new RequestLoadFiltered() {Filter = String.Empty});
-            taskPlannerAufgabenForm.AufgabeAnzeigen(initialReply);
+            var initialReply = requestHandler.LoadTasks(new RequestLoadFiltered {Filter = string.Empty});
+            taskPlannerMainForm.ShowTasks(initialReply);
 
-            Application.Run(taskPlannerAufgabenForm);
+            Application.Run(taskPlannerMainForm);
         }
     }
 }

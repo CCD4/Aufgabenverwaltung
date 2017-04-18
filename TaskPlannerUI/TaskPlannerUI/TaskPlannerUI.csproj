@@ -46,7 +46,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="FilterEventArgs.cs" />
     <Compile Include="TaskPlannerAufgabenForm.cs">
       <SubType>Form</SubType>
     </Compile>

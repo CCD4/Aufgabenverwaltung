@@ -1,32 +1,29 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace TaskPlanner
 {
     public class MemoryDBProvider
     {
-        private List<Aufgabe> storage;
+        private List<Task> storage;
 
         public MemoryDBProvider()
         {
-            storage = new List<Aufgabe>
+            storage = new List<Task>
             {
-                new Aufgabe
+                new Task
                 {
                     Text = "Mlich #Einkaufen",
                     Done = false,
                     Tags = new [] {"#Einkaufen"}
                 },
-                new Aufgabe
+                new Task
                 {
                     Text = "Chips #Einkaufen",
                     Done = true,
                     Tags = new [] {"#Einkaufen"}
                 },
-                new Aufgabe
+                new Task
                 {
                     Text = "Friseur #Home",
                     Done = false,
@@ -36,12 +33,12 @@ namespace TaskPlanner
         }
 
 
-        public string[] TagsLaden()
+        public string[] LoadTags()
         {
             return storage.SelectMany(a => a.Tags).Distinct().ToArray();
         }
 
-        public Aufgabe[] AufgabenLaden(string[] tags)
+        public Task[] LoadTasks(string[] tags)
         {
             if (tags.Length == 0)
                 return storage.ToArray();
@@ -49,7 +46,7 @@ namespace TaskPlanner
         }
     }
 
-    public class Aufgabe
+    public class Task
     {
         public string Text { get; set; }
         public bool Done { get; set; }

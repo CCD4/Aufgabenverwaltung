@@ -2,6 +2,6 @@
 {
     public class ReplayLoadTags
     {
-        public Tag[] Tags { get; set; }
+        public string[] Tags { get; set; }
     }
 }

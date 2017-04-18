@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TaskPlanner
 {
-    public class AufgabeInfo
+    public class TaskInfo
     {
         public string Text { get; set; }
         public bool Done { get; set; }

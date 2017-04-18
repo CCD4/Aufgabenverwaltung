@@ -1,6 +1,6 @@
 ﻿namespace TaskPlannerUI
 {
-    partial class TaskPlannerAufgabenForm
+    partial class TaskPlannerMainForm
     {
         /// <summary>
         /// Required designer variable.
@@ -49,7 +49,7 @@
             this.textBoxFilter.Location = new System.Drawing.Point(3, 3);
             this.textBoxFilter.Margin = new System.Windows.Forms.Padding(6);
             this.textBoxFilter.Name = "textBoxFilter";
-            this.textBoxFilter.Size = new System.Drawing.Size(429, 29);
+            this.textBoxFilter.Size = new System.Drawing.Size(421, 51);
             this.textBoxFilter.TabIndex = 0;
             this.textBoxFilter.TextChanged += new System.EventHandler(this.textBoxFilter_TextChanged);
             // 
@@ -58,11 +58,11 @@
             this.aufgabenliste.Dock = System.Windows.Forms.DockStyle.Fill;
             this.aufgabenliste.Font = new System.Drawing.Font("Courier New", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.aufgabenliste.FormattingEnabled = true;
-            this.aufgabenliste.ItemHeight = 21;
-            this.aufgabenliste.Location = new System.Drawing.Point(3, 32);
+            this.aufgabenliste.ItemHeight = 40;
+            this.aufgabenliste.Location = new System.Drawing.Point(3, 54);
             this.aufgabenliste.Margin = new System.Windows.Forms.Padding(6);
             this.aufgabenliste.Name = "aufgabenliste";
-            this.aufgabenliste.Size = new System.Drawing.Size(429, 606);
+            this.aufgabenliste.Size = new System.Drawing.Size(421, 555);
             this.aufgabenliste.TabIndex = 1;
             // 
             // panel1
@@ -79,10 +79,10 @@
             // textBoxAufgabeneditor
             // 
             this.textBoxAufgabeneditor.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.textBoxAufgabeneditor.Location = new System.Drawing.Point(0, 13);
+            this.textBoxAufgabeneditor.Location = new System.Drawing.Point(0, -9);
             this.textBoxAufgabeneditor.Margin = new System.Windows.Forms.Padding(6);
             this.textBoxAufgabeneditor.Name = "textBoxAufgabeneditor";
-            this.textBoxAufgabeneditor.Size = new System.Drawing.Size(305, 29);
+            this.textBoxAufgabeneditor.Size = new System.Drawing.Size(305, 51);
             this.textBoxAufgabeneditor.TabIndex = 0;
             // 
             // okButton
@@ -112,10 +112,10 @@
             // 
             this.TabPageAufgaben.Controls.Add(this.aufgabenliste);
             this.TabPageAufgaben.Controls.Add(this.textBoxFilter);
-            this.TabPageAufgaben.Location = new System.Drawing.Point(4, 33);
+            this.TabPageAufgaben.Location = new System.Drawing.Point(8, 58);
             this.TabPageAufgaben.Name = "TabPageAufgaben";
             this.TabPageAufgaben.Padding = new System.Windows.Forms.Padding(3);
-            this.TabPageAufgaben.Size = new System.Drawing.Size(435, 641);
+            this.TabPageAufgaben.Size = new System.Drawing.Size(427, 612);
             this.TabPageAufgaben.TabIndex = 0;
             this.TabPageAufgaben.Text = "Aufgaben";
             this.TabPageAufgaben.UseVisualStyleBackColor = true;
@@ -123,32 +123,30 @@
             // TabPageTags
             // 
             this.TabPageTags.Controls.Add(this.listBoxTags);
-            this.TabPageTags.Location = new System.Drawing.Point(4, 33);
+            this.TabPageTags.Location = new System.Drawing.Point(8, 58);
             this.TabPageTags.Name = "TabPageTags";
             this.TabPageTags.Padding = new System.Windows.Forms.Padding(3);
-            this.TabPageTags.Size = new System.Drawing.Size(435, 641);
+            this.TabPageTags.Size = new System.Drawing.Size(427, 612);
             this.TabPageTags.TabIndex = 1;
             this.TabPageTags.Text = "Tags";
             this.TabPageTags.UseVisualStyleBackColor = true;
             // 
             // listBoxTags
             // 
-            this.listBoxTags.DisplayMember = "Text";
             this.listBoxTags.Dock = System.Windows.Forms.DockStyle.Fill;
             this.listBoxTags.Font = new System.Drawing.Font("Courier New", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.listBoxTags.FormattingEnabled = true;
-            this.listBoxTags.ItemHeight = 21;
+            this.listBoxTags.ItemHeight = 40;
             this.listBoxTags.Location = new System.Drawing.Point(3, 3);
             this.listBoxTags.Margin = new System.Windows.Forms.Padding(6);
             this.listBoxTags.Name = "listBoxTags";
-            this.listBoxTags.Size = new System.Drawing.Size(429, 635);
+            this.listBoxTags.Size = new System.Drawing.Size(421, 606);
             this.listBoxTags.TabIndex = 2;
             this.listBoxTags.SelectedIndexChanged += new System.EventHandler(this.listBoxTags_SelectedIndexChanged);
-     
             // 
             // TaskPlannerAufgabenForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 24F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(22F, 44F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(443, 678);
             this.Controls.Add(this.panel1);
