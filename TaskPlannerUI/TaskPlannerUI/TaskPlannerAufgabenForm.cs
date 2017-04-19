@@ -17,14 +17,14 @@ namespace TaskPlannerUI
             textBoxFilter.Text = reply.Filter;
             aufgabenliste.Items.Clear();
             
-            var Texte = AufgabeAnzeigeErzeugen(reply.TaskInfos);
-            aufgabenliste.Items.AddRange(Texte.ToArray());
+            var texte = AufgabeAnzeigeErzeugen(reply.TaskInfos);
+            aufgabenliste.Items.AddRange(texte.ToArray());
             tabControl.SelectedTab = TabPageAufgaben;
         }
 
         public List<string> AufgabeAnzeigeErzeugen(TaskInfo[] aufgabeInfos)
         {
-            List<string> Texte = new List<string>();
+            var texte = new List<string>();
             foreach (var aufgabeInfo in aufgabeInfos)
             {
                 string text;
@@ -36,14 +36,15 @@ namespace TaskPlannerUI
                 {
                     text = "[ ] " + aufgabeInfo.Text;
                 }
-                Texte.Add(text);
+                texte.Add(text);
             }
-            return Texte;
+            return texte;
 
         }
 
         public event Action<RequestLoadFiltered> TaskViewRequested;
         public event Action<RequestLoadTags> TagsViewRequested;
+        public event Action<RequestAddTask> AddTaskRequested;
 
         private void textBoxFilter_TextChanged(object sender, EventArgs e)
         {
@@ -67,7 +68,12 @@ namespace TaskPlannerUI
         private void listBoxTags_SelectedIndexChanged(object sender, EventArgs e)
         {
             var selectetdTag = (string)listBoxTags.SelectedItem;
-            TaskViewRequested(new RequestLoadFiltered { Filter = selectetdTag });
+            TaskViewRequested?.Invoke(new RequestLoadFiltered { Filter = selectetdTag });
+        }
+
+        private void okButton_Click(object sender, EventArgs e)
+        {
+            AddTaskRequested?.Invoke(new RequestAddTask {TaskText = textBoxAufgabeneditor.Text});
         }
     }
 }

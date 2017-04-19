@@ -5,7 +5,8 @@ namespace TaskPlanner
 {
     public class RequestHandler
     {
-        private MemoryDBProvider dbProvider;
+        private readonly MemoryDBProvider dbProvider;
+        private string currentFilter = "";
 
         public RequestHandler()
         {
@@ -14,14 +15,36 @@ namespace TaskPlanner
 
         public ReplyLoadFiltered LoadTasks(RequestLoadFiltered request)
         {
-            string[] tags = ParseQuery(request.Filter);
+            currentFilter = request.Filter;
+            string[] tags = ParseQuery(currentFilter);
             var tasks = dbProvider.LoadTasks(tags);
             var taskInfos = Map(tasks);
             return new ReplyLoadFiltered
             {
-                Filter = request.Filter,
+                Filter = currentFilter,
                 TaskInfos = taskInfos
             };
+        }
+
+        public ReplyLoadFiltered AddTask(RequestAddTask request)
+        {
+            Task newTask = ParseTask(request.TaskText);
+            dbProvider.AddTask(newTask);
+            return LoadTasks(new RequestLoadFiltered { Filter = currentFilter });
+        }
+
+        public Task ParseTask(string taskText)
+        {
+            var task = new Task();
+            task.Text = taskText;
+            var tagText = ExtractTags(taskText);
+            task.Tags = ParseQuery(tagText);
+            return task;
+        }
+
+        private string ExtractTags(string taskText)
+        {
+            return taskText.SkipWhile(c => c != '#').Aggregate("", (s, c) => s + c);
         }
 
         private TaskInfo[] Map(Task[] tasks)
@@ -35,14 +58,14 @@ namespace TaskPlanner
 
         private string[] ParseQuery(string filter)
         {
-            var tags = filter.Split(new[] {'#', ' '}, StringSplitOptions.RemoveEmptyEntries);
+            var tags = filter.Split(new[] { '#', ' ' }, StringSplitOptions.RemoveEmptyEntries);
             return tags.Select(t => '#' + t).ToArray();
         }
 
         public ReplayLoadTags LoadTags(RequestLoadTags request)
         {
             var tags = dbProvider.LoadTags();
-            return new ReplayLoadTags {Tags = tags.ToArray()};
+            return new ReplayLoadTags { Tags = tags.ToArray() };
         }
     }
 

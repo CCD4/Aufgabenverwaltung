@@ -30,6 +30,12 @@ namespace TaskPlannerUI
                 taskPlannerMainForm.ShowTags(reply);
             };
 
+            taskPlannerMainForm.AddTaskRequested += request =>
+            {
+                var reply = requestHandler.AddTask(request);
+                taskPlannerMainForm.ShowTasks(reply);
+            };
+
             var initialReply = requestHandler.LoadTasks(new RequestLoadFiltered {Filter = string.Empty});
             taskPlannerMainForm.ShowTasks(initialReply);
 

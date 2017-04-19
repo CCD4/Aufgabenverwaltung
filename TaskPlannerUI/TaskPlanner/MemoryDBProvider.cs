@@ -44,6 +44,11 @@ namespace TaskPlanner
                 return storage.ToArray();
             return storage.Where(a => tags.All(t => a.Tags.Contains(t))).ToArray();
         }
+
+        public void AddTask(Task taskToAdd)
+        {
+            storage.Add(taskToAdd);
+        }
     }
 
     public class Task
