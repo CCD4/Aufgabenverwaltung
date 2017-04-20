@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.26228.10
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaskPlannerUI", "TaskPlannerUI\TaskPlannerUI.csproj", "{FEB97615-0DBA-4064-BBE9-F90B2534AA45}"
 EndProject
@@ -10,6 +10,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bilder", "Bilder\Bilder.csproj", "{33414FE1-66E4-4983-8F6D-9DD043759E59}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaskPlanner.Tests", "TaskPlanner.Tests\TaskPlanner.Tests.csproj", "{99AE8DE6-BE45-4D30-9066-1D27ECD4DED2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaskPlanner.Presentation", "TaskPlanner.Presentation\TaskPlanner.Presentation.csproj", "{AC562045-B5DB-4996-BE26-7E803FC0AB41}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{99AE8DE6-BE45-4D30-9066-1D27ECD4DED2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{99AE8DE6-BE45-4D30-9066-1D27ECD4DED2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{99AE8DE6-BE45-4D30-9066-1D27ECD4DED2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AC562045-B5DB-4996-BE26-7E803FC0AB41}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AC562045-B5DB-4996-BE26-7E803FC0AB41}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AC562045-B5DB-4996-BE26-7E803FC0AB41}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AC562045-B5DB-4996-BE26-7E803FC0AB41}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
