@@ -73,7 +73,7 @@ namespace TaskPlannerUI
         private void listBoxTags_SelectedIndexChanged(object sender, EventArgs e)
         {
             var selectetdTag = tagInfos[listBoxTags.SelectedIndex];
-            TaskViewRequested?.Invoke(new RequestLoadFiltered { Filter = selectetdTag.Tag });
+            TaskViewRequested?.Invoke(new RequestLoadFiltered (selectetdTag.Tag));
         }
 
         private void okButton_Click(object sender, EventArgs e)
