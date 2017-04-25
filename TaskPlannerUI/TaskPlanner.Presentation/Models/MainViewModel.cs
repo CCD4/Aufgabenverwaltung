@@ -9,7 +9,7 @@ namespace TaskPlanner.Presentation.Models
 
         public MainViewModel()
         {
-            AddTaskCommand = new DelegateCommand(_ => AddTaskRequested(new RequestAddTask { TaskText = TaskText}));
+            AddTaskCommand = new DelegateCommand(_ => AddTaskRequested(new RequestAddTask(TaskText)));
         }
 
         public event Action<RequestAddTask> AddTaskRequested;

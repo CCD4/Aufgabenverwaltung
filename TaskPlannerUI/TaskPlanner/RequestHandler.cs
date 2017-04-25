@@ -1,16 +1,17 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace TaskPlanner
 {
     public class RequestHandler
     {
-        private readonly MemoryDBProvider dbProvider;
+        private readonly XMLProvider dbProvider;
         private string currentFilter = "";
 
         public RequestHandler()
         {
-            dbProvider = new MemoryDBProvider();
+            dbProvider = new XMLProvider();
         }
 
         public ReplyLoadFiltered LoadTasks(RequestLoadFiltered request)
@@ -18,7 +19,7 @@ namespace TaskPlanner
             currentFilter = request.Filter;
             string[] tags = ParseQuery(currentFilter);
             var tasks = dbProvider.LoadTasks(tags);
-            var taskInfos = Map(tasks);
+            var taskInfos = MapTasks(tasks);
             return new ReplyLoadFiltered
             {
                 Filter = currentFilter,
@@ -30,7 +31,7 @@ namespace TaskPlanner
         {
             Task newTask = ParseTask(request.TaskText);
             dbProvider.AddTask(newTask);
-            return LoadTasks(new RequestLoadFiltered { Filter = currentFilter });
+            return LoadTasks(new RequestLoadFiltered(currentFilter));
         }
 
         public Task ParseTask(string taskText)
@@ -47,7 +48,7 @@ namespace TaskPlanner
             return taskText.SkipWhile(c => c != '#').Aggregate("", (s, c) => s + c);
         }
 
-        private TaskInfo[] Map(Task[] tasks)
+        private TaskInfo[] MapTasks(Task[] tasks)
         {
             return tasks.Select(task => new TaskInfo
             {
@@ -62,10 +63,16 @@ namespace TaskPlanner
             return tags.Select(t => '#' + t).ToArray();
         }
 
-        public ReplayLoadTags LoadTags(RequestLoadTags request)
+        public ReplyLoadTags LoadTags(RequestLoadTags request)
         {
             var tags = dbProvider.LoadTags();
-            return new ReplayLoadTags { Tags = tags.ToArray() };
+            var tagInfos = MapTagCounts(tags);
+            return new ReplyLoadTags { TagInfos = tagInfos.ToArray() };
+        }
+
+        private IEnumerable<TagInfo> MapTagCounts(Dictionary<string, int> tagCounts)
+        {
+            return tagCounts.Select(tc => new TagInfo {Tag = tc.Key, Count = tc.Value});
         }
     }
 

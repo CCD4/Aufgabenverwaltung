@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows.Forms;
 using TaskPlanner;
 
@@ -7,6 +8,8 @@ namespace TaskPlannerUI
 {
     public partial class TaskPlannerMainForm : Form
     {
+        private TagInfo[] tagInfos;
+
         public TaskPlannerMainForm()
         {
             InitializeComponent();
@@ -48,7 +51,7 @@ namespace TaskPlannerUI
 
         private void textBoxFilter_TextChanged(object sender, EventArgs e)
         {
-            TaskViewRequested(new RequestLoadFiltered {Filter = textBoxFilter.Text});
+            TaskViewRequested(new RequestLoadFiltered(textBoxFilter.Text));
         }
 
         private void tabControl1_SelectedIndexChanged(object sender, EventArgs e)
@@ -59,21 +62,23 @@ namespace TaskPlannerUI
             }
         }
         
-        public void ShowTags(ReplayLoadTags reply)
+        public void ShowTags(ReplyLoadTags reply)
         {
             listBoxTags.Items.Clear();
-            listBoxTags.Items.AddRange(reply.Tags);    
+            tagInfos = reply.TagInfos;
+            var tagInfoStrings = reply.TagInfos.Select(ti => $"{ti.Tag} ({ti.Count})").ToArray();
+            listBoxTags.Items.AddRange(tagInfoStrings);                
         }
    
         private void listBoxTags_SelectedIndexChanged(object sender, EventArgs e)
         {
-            var selectetdTag = (string)listBoxTags.SelectedItem;
-            TaskViewRequested?.Invoke(new RequestLoadFiltered { Filter = selectetdTag });
+            var selectetdTag = tagInfos[listBoxTags.SelectedIndex];
+            TaskViewRequested?.Invoke(new RequestLoadFiltered { Filter = selectetdTag.Tag });
         }
 
         private void okButton_Click(object sender, EventArgs e)
         {
-            AddTaskRequested?.Invoke(new RequestAddTask {TaskText = textBoxAufgabeneditor.Text});
+            AddTaskRequested?.Invoke(new RequestAddTask (textBoxAufgabeneditor.Text));
         }
     }
 }
