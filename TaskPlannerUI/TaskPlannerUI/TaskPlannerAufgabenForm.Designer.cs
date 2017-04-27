@@ -62,15 +62,16 @@
             this.aufgabenliste.Location = new System.Drawing.Point(3, 32);
             this.aufgabenliste.Margin = new System.Windows.Forms.Padding(6);
             this.aufgabenliste.Name = "aufgabenliste";
-            this.aufgabenliste.Size = new System.Drawing.Size(429, 606);
+            this.aufgabenliste.Size = new System.Drawing.Size(429, 524);
             this.aufgabenliste.TabIndex = 1;
+            this.aufgabenliste.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.aufgabenliste_MouseDoubleClick);
             // 
             // panel1
             // 
             this.panel1.Controls.Add(this.textBoxAufgabeneditor);
             this.panel1.Controls.Add(this.okButton);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel1.Location = new System.Drawing.Point(0, 648);
+            this.panel1.Location = new System.Drawing.Point(0, 566);
             this.panel1.Margin = new System.Windows.Forms.Padding(6);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(443, 30);
@@ -84,6 +85,7 @@
             this.textBoxAufgabeneditor.Name = "textBoxAufgabeneditor";
             this.textBoxAufgabeneditor.Size = new System.Drawing.Size(305, 29);
             this.textBoxAufgabeneditor.TabIndex = 0;
+            this.textBoxAufgabeneditor.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxAufgabeneditor_KeyPress);
             // 
             // okButton
             // 
@@ -105,7 +107,7 @@
             this.tabControl.Location = new System.Drawing.Point(0, 0);
             this.tabControl.Name = "tabControl";
             this.tabControl.SelectedIndex = 0;
-            this.tabControl.Size = new System.Drawing.Size(443, 678);
+            this.tabControl.Size = new System.Drawing.Size(443, 596);
             this.tabControl.TabIndex = 3;
             this.tabControl.SelectedIndexChanged += new System.EventHandler(this.tabControl1_SelectedIndexChanged);
             // 
@@ -116,7 +118,7 @@
             this.TabPageAufgaben.Location = new System.Drawing.Point(4, 33);
             this.TabPageAufgaben.Name = "TabPageAufgaben";
             this.TabPageAufgaben.Padding = new System.Windows.Forms.Padding(3);
-            this.TabPageAufgaben.Size = new System.Drawing.Size(435, 641);
+            this.TabPageAufgaben.Size = new System.Drawing.Size(435, 559);
             this.TabPageAufgaben.TabIndex = 0;
             this.TabPageAufgaben.Text = "Aufgaben";
             this.TabPageAufgaben.UseVisualStyleBackColor = true;
@@ -127,7 +129,7 @@
             this.TabPageTags.Location = new System.Drawing.Point(4, 33);
             this.TabPageTags.Name = "TabPageTags";
             this.TabPageTags.Padding = new System.Windows.Forms.Padding(3);
-            this.TabPageTags.Size = new System.Drawing.Size(435, 641);
+            this.TabPageTags.Size = new System.Drawing.Size(435, 559);
             this.TabPageTags.TabIndex = 1;
             this.TabPageTags.Text = "Tags";
             this.TabPageTags.UseVisualStyleBackColor = true;
@@ -141,7 +143,7 @@
             this.listBoxTags.Location = new System.Drawing.Point(3, 3);
             this.listBoxTags.Margin = new System.Windows.Forms.Padding(6);
             this.listBoxTags.Name = "listBoxTags";
-            this.listBoxTags.Size = new System.Drawing.Size(429, 635);
+            this.listBoxTags.Size = new System.Drawing.Size(429, 553);
             this.listBoxTags.TabIndex = 2;
             this.listBoxTags.SelectedIndexChanged += new System.EventHandler(this.listBoxTags_SelectedIndexChanged);
             // 
@@ -149,7 +151,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 24F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(443, 678);
+            this.ClientSize = new System.Drawing.Size(443, 596);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.tabControl);
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));

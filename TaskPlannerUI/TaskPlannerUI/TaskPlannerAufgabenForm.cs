@@ -11,6 +11,7 @@ namespace TaskPlannerUI
 {
     public partial class TaskPlannerMainForm : Form
     {
+        private TaskInfo[] taskInfos;
         private TagInfo[] tagInfos;
 
         public TaskPlannerMainForm()
@@ -40,6 +41,7 @@ namespace TaskPlannerUI
 
         public List<string> AufgabeAnzeigeErzeugen(TaskInfo[] aufgabeInfos)
         {
+            taskInfos = aufgabeInfos;
             var texte = new List<string>();
             foreach (var aufgabeInfo in aufgabeInfos)
             {
@@ -91,7 +93,30 @@ namespace TaskPlannerUI
 
         private void okButton_Click(object sender, EventArgs e)
         {
+            OnAddTaskRequested();
+        }
+
+        private void textBoxAufgabeneditor_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == (char)Keys.Enter)
+            {
+                OnAddTaskRequested();
+                e.Handled = true;
+            }
+        }
+
+        private void OnAddTaskRequested()
+        {
+            if (string.IsNullOrEmpty(textBoxAufgabeneditor.Text))
+                return;
             AddTaskRequested(new RequestAddTask(textBoxAufgabeneditor.Text));
+            textBoxAufgabeneditor.Clear();
+        }
+
+        private void aufgabenliste_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            taskInfos[aufgabenliste.SelectedIndex].Done = !taskInfos[aufgabenliste.SelectedIndex].Done;
+            ShowTasks(new ReplyLoadFiltered {Filter = textBoxFilter.Text, TaskInfos = taskInfos});
         }
     }
 }
