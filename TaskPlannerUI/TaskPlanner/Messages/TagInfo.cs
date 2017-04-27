@@ -1,4 +1,4 @@
-﻿namespace TaskPlanner
+﻿namespace TaskPlanner.Messages
 {
     public class TagInfo
     {

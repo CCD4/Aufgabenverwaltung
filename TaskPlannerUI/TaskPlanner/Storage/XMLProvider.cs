@@ -1,16 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Xml.Serialization;
+using TaskPlanner.Domain;
 
-namespace TaskPlanner
+namespace TaskPlanner.Storage
 {
     public class XMLProvider
     {
         public Dictionary<string, int> LoadTags()
         {
             var tasks = LoadFromFile();
+            return CountTags(tasks);
+        }
+
+        private static Dictionary<string, int> CountTags(List<Task> tasks)
+        {
             var allTags = tasks.SelectMany(a => a.Tags);
             var groupedTags = allTags.GroupBy(tag => tag);
             return groupedTags.ToDictionary(grp => grp.Key, grp => grp.Count());
@@ -64,12 +69,5 @@ namespace TaskPlanner
                 ser.Serialize(fileStream, tasks);
             }
         }
-    }
-
-    public class Task
-    {
-        public string Text { get; set; }
-        public bool Done { get; set; }
-        public string[] Tags { get; set; }
     }
 }

@@ -2,6 +2,9 @@
 using System.IO;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using TaskPlanner.Messages;
+using TaskPlanner.Replies;
+using TaskPlanner.Requests;
 
 namespace TaskPlanner.Tests
 {

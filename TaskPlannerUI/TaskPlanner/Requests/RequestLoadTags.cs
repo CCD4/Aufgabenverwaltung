@@ -1,4 +1,4 @@
-﻿namespace TaskPlanner
+﻿namespace TaskPlanner.Requests
 {
     public class RequestLoadTags
     {

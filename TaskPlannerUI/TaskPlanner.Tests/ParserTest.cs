@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using TaskPlanner.Domain;
 
 namespace TaskPlanner.Tests
 {

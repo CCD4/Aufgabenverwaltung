@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Windows;
+using TaskPlanner.Replies;
+using TaskPlanner.Requests;
 
 namespace TaskPlanner.Presentation.Models
 {

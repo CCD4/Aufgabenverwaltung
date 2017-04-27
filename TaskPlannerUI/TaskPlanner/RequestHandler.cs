@@ -1,6 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using TaskPlanner.Domain;
+using TaskPlanner.Messages;
+using TaskPlanner.Replies;
+using TaskPlanner.Requests;
+using TaskPlanner.Storage;
 
 namespace TaskPlanner
 {

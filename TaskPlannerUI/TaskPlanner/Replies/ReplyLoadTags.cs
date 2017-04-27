@@ -1,4 +1,6 @@
-﻿namespace TaskPlanner
+﻿using TaskPlanner.Messages;
+
+namespace TaskPlanner.Replies
 {
     public class ReplyLoadTags
     {
