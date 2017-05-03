@@ -63,6 +63,7 @@ namespace TaskPlannerUI
         public event Action<RequestLoadFiltered> TaskViewRequested;
         public event Action<RequestLoadTags> TagsViewRequested;
         public event Action<RequestAddTask> AddTaskRequested;
+        public event Action<RequestUpdateTask> UpdateTaskRequested;
 
         private void textBoxFilter_TextChanged(object sender, EventArgs e)
         {
@@ -115,8 +116,8 @@ namespace TaskPlannerUI
 
         private void aufgabenliste_MouseDoubleClick(object sender, MouseEventArgs e)
         {
-            taskInfos[aufgabenliste.SelectedIndex].Done = !taskInfos[aufgabenliste.SelectedIndex].Done;
-            ShowTasks(new ReplyLoadFiltered {Filter = textBoxFilter.Text, TaskInfos = taskInfos});
+            var requestUpdateTask = new RequestUpdateTask(taskInfos[aufgabenliste.SelectedIndex].Id, !taskInfos[aufgabenliste.SelectedIndex].Done);
+            UpdateTaskRequested(requestUpdateTask);
         }
     }
 }

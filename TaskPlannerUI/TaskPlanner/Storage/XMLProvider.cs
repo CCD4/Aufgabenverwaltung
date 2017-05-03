@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Xml.Serialization;
@@ -6,8 +7,10 @@ using TaskPlanner.Domain;
 
 namespace TaskPlanner.Storage
 {
-    public class XMLProvider
+    public class XmlProvider
     {
+        private const string FileName = "tasks.xml";
+
         public Dictionary<string, int> LoadTags()
         {
             var tasks = LoadFromFile();
@@ -35,7 +38,7 @@ namespace TaskPlanner.Storage
 
             try
             {
-                using (var fileStream = File.OpenRead("tasks.xml"))
+                using (var fileStream = File.OpenRead(FileName))
                 {
                     tasks = (List<Task>)ser.Deserialize(fileStream);
                 }
@@ -64,10 +67,24 @@ namespace TaskPlanner.Storage
         private void SaveTasks(List<Task> tasks)
         {
             var ser = new XmlSerializer(typeof(List<Task>));
-            using (var fileStream = File.OpenWrite("tasks.xml"))
+            using (var fileStream = File.Create(FileName))
             {
                 ser.Serialize(fileStream, tasks);
+                fileStream.Flush(true);
             }
+        }
+
+        public void UpdateTask(Guid taskId, bool done)
+        {
+            var storage = LoadFromFile();
+            UpdateTask(storage, taskId, done);
+            SaveTasks(storage);
+        }
+
+        private static void UpdateTask(List<Task> storage, Guid taskId, bool done)
+        {
+            var task = storage.First(t => t.Id == taskId);
+            task.Done = done;
         }
     }
 }

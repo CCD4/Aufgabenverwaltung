@@ -58,5 +58,21 @@ namespace TaskPlanner.Tests
             Assert.AreEqual(2, tags["#Einkauf"]);
             Assert.AreEqual(1, tags["#Spaß"]);
         }
+
+        [TestMethod]
+        public void UpdateTask()
+        {
+            var requestHandler = new RequestHandler();
+            requestHandler.AddTask(new RequestAddTask("Bier #Einkauf #Home"));
+            requestHandler.AddTask(new RequestAddTask("Hausaufgaben #CCD #Spaß"));
+            requestHandler.AddTask(new RequestAddTask("CleanCodeBuch #Einkauf #Schnell"));
+            var tasks = requestHandler.LoadTasks(new RequestLoadFiltered("#Einkauf"));
+            var taskInfo = tasks.TaskInfos.First();
+            Assert.IsFalse(taskInfo.Done);
+            requestHandler.UpdateTask(new RequestUpdateTask(taskInfo.Id,true));
+            tasks = requestHandler.LoadTasks(new RequestLoadFiltered("#Einkauf"));
+            var updatedtask = tasks.TaskInfos.First(info => info.Id == taskInfo.Id);
+            Assert.IsTrue(updatedtask.Done);
+        }
     }
 }

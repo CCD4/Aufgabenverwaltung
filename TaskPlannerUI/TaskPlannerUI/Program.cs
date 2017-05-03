@@ -37,6 +37,12 @@ namespace TaskPlannerUI
                 taskPlannerMainForm.ShowTasks(reply);
             };
 
+            taskPlannerMainForm.UpdateTaskRequested += request =>
+            {
+                var reply = requestHandler.UpdateTask(request);
+                taskPlannerMainForm.ShowTasks(reply);
+            };
+
             var initialReply = requestHandler.LoadTasks(new RequestLoadFiltered(string.Empty));
             taskPlannerMainForm.ShowTasks(initialReply);
 

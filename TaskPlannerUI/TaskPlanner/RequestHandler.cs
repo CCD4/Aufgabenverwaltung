@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using TaskPlanner.Domain;
 using TaskPlanner.Messages;
@@ -11,12 +10,12 @@ namespace TaskPlanner
 {
     public class RequestHandler
     {
-        private readonly XMLProvider dbProvider;
+        private readonly XmlProvider dbProvider;
         private string currentFilter = "";
 
         public RequestHandler()
         {
-            dbProvider = new XMLProvider();
+            dbProvider = new XmlProvider();
         }
 
         public ReplyLoadFiltered LoadTasks(RequestLoadFiltered request)
@@ -39,10 +38,17 @@ namespace TaskPlanner
             return LoadTasks(new RequestLoadFiltered(currentFilter));
         }
 
+        public ReplyLoadFiltered UpdateTask(RequestUpdateTask request)
+        {
+            dbProvider.UpdateTask(request.Id, request.Done);
+            return LoadTasks(new RequestLoadFiltered(currentFilter));
+        }
+
         private TaskInfo[] MapTasks(Task[] tasks)
         {
             return tasks.Select(task => new TaskInfo
             {
+                Id = task.Id,
                 Text = task.Text,
                 Done = task.Done
             }).ToArray();
