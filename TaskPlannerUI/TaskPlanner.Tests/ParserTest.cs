@@ -18,9 +18,9 @@ namespace TaskPlanner.Tests
         }
 
         [TestMethod]
-        public void ParseQuery()
+        public void ExtractTest()
         {
-            string[] tags = Parser.ParseQuery("#Einkauf #Home");
+            string[] tags = Parser.ExtractTags("Butter #Einkauf #Home");
             Assert.AreEqual(2, tags.Length);
             Assert.AreEqual("#Einkauf", tags[0]);
             Assert.AreEqual("#Home", tags[1]);

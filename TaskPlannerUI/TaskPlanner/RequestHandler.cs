@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using TaskPlanner.Domain;
 using TaskPlanner.Messages;
@@ -10,19 +11,21 @@ namespace TaskPlanner
 {
     public class RequestHandler
     {
-        private readonly XmlProvider dbProvider;
+        private readonly TaskProvider taskProvider;
         private string currentFilter = "";
+        private bool currentDoneFilter;
 
         public RequestHandler()
         {
-            dbProvider = new XmlProvider();
+            taskProvider = new TaskProvider(new XmlProvider());
         }
 
         public ReplyLoadFiltered LoadTasks(RequestLoadFiltered request)
         {
             currentFilter = request.Filter;
-            string[] tags = Parser.ParseQuery(currentFilter);
-            var tasks = dbProvider.LoadTasks(tags);
+            currentDoneFilter = request.IncludeDoneTasks;
+            string[] tags = Parser.ExtractTags(currentFilter);
+            var tasks = taskProvider.LoadTasks(tags, request.IncludeDoneTasks);
             var taskInfos = MapTasks(tasks);
             return new ReplyLoadFiltered
             {
@@ -31,17 +34,24 @@ namespace TaskPlanner
             };
         }
 
-        public ReplyLoadFiltered AddTask(RequestAddTask request)
+        public bool AddTask(RequestAddTask request)
         {
-            Task newTask = Parser.ParseTask(request.TaskText);
-            dbProvider.AddTask(newTask);
-            return LoadTasks(new RequestLoadFiltered(currentFilter));
+            try
+            {
+                Task newTask = Parser.ParseTask(request.TaskText);
+                taskProvider.AddTask(newTask);
+                return true;
+            }
+            catch(Exception)
+            {
+                return false;
+            }
         }
 
         public ReplyLoadFiltered UpdateTask(RequestUpdateTask request)
         {
-            dbProvider.UpdateTask(request.Id, request.Done);
-            return LoadTasks(new RequestLoadFiltered(currentFilter));
+            taskProvider.UpdateTask(request.Id, request.Done, request.TaskText);
+            return LoadTasks(new RequestLoadFiltered(currentFilter, currentDoneFilter));
         }
 
         private TaskInfo[] MapTasks(Task[] tasks)
@@ -56,7 +66,7 @@ namespace TaskPlanner
 
         public ReplyLoadTags LoadTags(RequestLoadTags request)
         {
-            var tags = dbProvider.LoadTags();
+            var tags = taskProvider.LoadTags();
             var tagInfos = MapTagCounts(tags);
             return new ReplyLoadTags { TagInfos = tagInfos.ToArray() };
         }

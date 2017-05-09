@@ -31,16 +31,17 @@
             this.textBoxFilter = new System.Windows.Forms.TextBox();
             this.aufgabenliste = new System.Windows.Forms.ListBox();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.checkBoxIncludeDone = new System.Windows.Forms.CheckBox();
             this.textBoxAufgabeneditor = new System.Windows.Forms.TextBox();
             this.okButton = new System.Windows.Forms.Button();
             this.tabControl = new System.Windows.Forms.TabControl();
-            this.TabPageAufgaben = new System.Windows.Forms.TabPage();
             this.TabPageTags = new System.Windows.Forms.TabPage();
             this.listBoxTags = new System.Windows.Forms.ListBox();
+            this.TabPageAufgaben = new System.Windows.Forms.TabPage();
             this.panel1.SuspendLayout();
             this.tabControl.SuspendLayout();
-            this.TabPageAufgaben.SuspendLayout();
             this.TabPageTags.SuspendLayout();
+            this.TabPageAufgaben.SuspendLayout();
             this.SuspendLayout();
             // 
             // textBoxFilter
@@ -62,35 +63,47 @@
             this.aufgabenliste.Location = new System.Drawing.Point(3, 32);
             this.aufgabenliste.Margin = new System.Windows.Forms.Padding(6);
             this.aufgabenliste.Name = "aufgabenliste";
-            this.aufgabenliste.Size = new System.Drawing.Size(429, 524);
+            this.aufgabenliste.Size = new System.Drawing.Size(429, 449);
             this.aufgabenliste.TabIndex = 1;
+            this.aufgabenliste.SelectedIndexChanged += new System.EventHandler(this.aufgabenliste_SelectedIndexChanged);
             this.aufgabenliste.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.aufgabenliste_MouseDoubleClick);
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.checkBoxIncludeDone);
             this.panel1.Controls.Add(this.textBoxAufgabeneditor);
             this.panel1.Controls.Add(this.okButton);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel1.Location = new System.Drawing.Point(0, 566);
+            this.panel1.Location = new System.Drawing.Point(0, 521);
             this.panel1.Margin = new System.Windows.Forms.Padding(6);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(443, 30);
+            this.panel1.Size = new System.Drawing.Size(443, 75);
             this.panel1.TabIndex = 2;
+            // 
+            // checkBoxIncludeDone
+            // 
+            this.checkBoxIncludeDone.AutoSize = true;
+            this.checkBoxIncludeDone.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.checkBoxIncludeDone.Location = new System.Drawing.Point(7, 10);
+            this.checkBoxIncludeDone.Name = "checkBoxIncludeDone";
+            this.checkBoxIncludeDone.Size = new System.Drawing.Size(80, 20);
+            this.checkBoxIncludeDone.TabIndex = 3;
+            this.checkBoxIncludeDone.Text = "Erledigt?";
+            this.checkBoxIncludeDone.UseVisualStyleBackColor = true;
+            this.checkBoxIncludeDone.CheckedChanged += new System.EventHandler(this.checkBoxIncludeDone_CheckedChanged);
             // 
             // textBoxAufgabeneditor
             // 
-            this.textBoxAufgabeneditor.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.textBoxAufgabeneditor.Location = new System.Drawing.Point(0, 1);
+            this.textBoxAufgabeneditor.Location = new System.Drawing.Point(4, 39);
             this.textBoxAufgabeneditor.Margin = new System.Windows.Forms.Padding(6);
             this.textBoxAufgabeneditor.Name = "textBoxAufgabeneditor";
-            this.textBoxAufgabeneditor.Size = new System.Drawing.Size(305, 29);
+            this.textBoxAufgabeneditor.Size = new System.Drawing.Size(293, 29);
             this.textBoxAufgabeneditor.TabIndex = 0;
             this.textBoxAufgabeneditor.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxAufgabeneditor_KeyPress);
             // 
             // okButton
             // 
-            this.okButton.Dock = System.Windows.Forms.DockStyle.Right;
-            this.okButton.Location = new System.Drawing.Point(305, 0);
+            this.okButton.Location = new System.Drawing.Point(301, 38);
             this.okButton.Margin = new System.Windows.Forms.Padding(6);
             this.okButton.Name = "okButton";
             this.okButton.Size = new System.Drawing.Size(138, 30);
@@ -107,21 +120,9 @@
             this.tabControl.Location = new System.Drawing.Point(0, 0);
             this.tabControl.Name = "tabControl";
             this.tabControl.SelectedIndex = 0;
-            this.tabControl.Size = new System.Drawing.Size(443, 596);
+            this.tabControl.Size = new System.Drawing.Size(443, 521);
             this.tabControl.TabIndex = 3;
             this.tabControl.SelectedIndexChanged += new System.EventHandler(this.tabControl1_SelectedIndexChanged);
-            // 
-            // TabPageAufgaben
-            // 
-            this.TabPageAufgaben.Controls.Add(this.aufgabenliste);
-            this.TabPageAufgaben.Controls.Add(this.textBoxFilter);
-            this.TabPageAufgaben.Location = new System.Drawing.Point(4, 33);
-            this.TabPageAufgaben.Name = "TabPageAufgaben";
-            this.TabPageAufgaben.Padding = new System.Windows.Forms.Padding(3);
-            this.TabPageAufgaben.Size = new System.Drawing.Size(435, 559);
-            this.TabPageAufgaben.TabIndex = 0;
-            this.TabPageAufgaben.Text = "Aufgaben";
-            this.TabPageAufgaben.UseVisualStyleBackColor = true;
             // 
             // TabPageTags
             // 
@@ -147,13 +148,25 @@
             this.listBoxTags.TabIndex = 2;
             this.listBoxTags.SelectedIndexChanged += new System.EventHandler(this.listBoxTags_SelectedIndexChanged);
             // 
+            // TabPageAufgaben
+            // 
+            this.TabPageAufgaben.Controls.Add(this.aufgabenliste);
+            this.TabPageAufgaben.Controls.Add(this.textBoxFilter);
+            this.TabPageAufgaben.Location = new System.Drawing.Point(4, 33);
+            this.TabPageAufgaben.Name = "TabPageAufgaben";
+            this.TabPageAufgaben.Padding = new System.Windows.Forms.Padding(3);
+            this.TabPageAufgaben.Size = new System.Drawing.Size(435, 484);
+            this.TabPageAufgaben.TabIndex = 0;
+            this.TabPageAufgaben.Text = "Aufgaben";
+            this.TabPageAufgaben.UseVisualStyleBackColor = true;
+            // 
             // TaskPlannerMainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 24F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(443, 596);
-            this.Controls.Add(this.panel1);
             this.Controls.Add(this.tabControl);
+            this.Controls.Add(this.panel1);
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Margin = new System.Windows.Forms.Padding(6);
             this.Name = "TaskPlannerMainForm";
@@ -161,9 +174,9 @@
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             this.tabControl.ResumeLayout(false);
+            this.TabPageTags.ResumeLayout(false);
             this.TabPageAufgaben.ResumeLayout(false);
             this.TabPageAufgaben.PerformLayout();
-            this.TabPageTags.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -179,6 +192,7 @@
         private System.Windows.Forms.TabPage TabPageAufgaben;
         private System.Windows.Forms.TabPage TabPageTags;
         private System.Windows.Forms.ListBox listBoxTags;
+        private System.Windows.Forms.CheckBox checkBoxIncludeDone;
     }
 }
 

@@ -5,24 +5,18 @@ namespace TaskPlanner.Domain
 {
     public static class Parser
     {
-        public static  Task ParseTask(string taskText)
+        public static Task ParseTask(string taskText)
         {
             var task = new Task();
             task.Text = taskText;
-            var tagText = ExtractTags(taskText);
-            task.Tags = ParseQuery(tagText);
+            task.Tags = ExtractTags(taskText);
             return task;
         }
 
-        private static string ExtractTags(string taskText)
+        public static string[] ExtractTags(string taskText)
         {
-            return taskText.SkipWhile(c => c != '#').Aggregate("", (s, c) => s + c);
-        }
-
-        public static string[] ParseQuery(string filter)
-        {
-            var tags = filter.Split(new[] { '#', ' ' }, StringSplitOptions.RemoveEmptyEntries);
-            return tags.Select(t => '#' + t).ToArray();
+            var tags = taskText.Split(new[] {' '}, StringSplitOptions.RemoveEmptyEntries);
+            return tags.Where(t => t.StartsWith("#")).ToArray();
         }
     }
 }

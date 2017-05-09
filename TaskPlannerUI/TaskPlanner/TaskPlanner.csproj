@@ -46,6 +46,8 @@
     <Compile Include="Messages\TagInfo.cs" />
     <Compile Include="Messages\TaskInfo.cs" />
     <Compile Include="Requests\RequestUpdateTask.cs" />
+    <Compile Include="Storage\IStorageProvider.cs" />
+    <Compile Include="Storage\TaskProvider.cs" />
     <Compile Include="Storage\XMLProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Replies\ReplyLoadTags.cs" />

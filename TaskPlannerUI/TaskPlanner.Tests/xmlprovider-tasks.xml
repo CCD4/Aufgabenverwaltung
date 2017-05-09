@@ -1,0 +1,20 @@
+﻿<?xml version="1.0"?>
+<ArrayOfTask xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Task>
+    <Id>4e875038-65a4-4263-bd77-c89b61eafda9</Id>
+    <Text>Butter #Einkaufen</Text>
+    <Done>false</Done>
+    <Tags>
+      <string>#Einkaufen</string>
+    </Tags>
+  </Task>
+  <Task>
+    <Id>a4d84727-caa8-4658-81b9-88a41802e898</Id>
+    <Text>Milch #Home #Einkaufen</Text>
+    <Done>true</Done>
+    <Tags>
+      <string>#Home</string>
+      <string>#Einkaufen</string>
+    </Tags>
+  </Task>
+</ArrayOfTask>

@@ -13,6 +13,7 @@ namespace TaskPlannerUI
     {
         private TaskInfo[] taskInfos;
         private TagInfo[] tagInfos;
+        private TaskInfo taskInfo;
 
         public TaskPlannerMainForm()
         {
@@ -24,6 +25,8 @@ namespace TaskPlannerUI
             FilterAnzeigen(reply.Filter);
             var texte = AufgabeAnzeigeErzeugen(reply.TaskInfos);
             AufgabenAnzeigen(texte);
+            taskInfo = null;
+            textBoxAufgabeneditor.Text = "";
         }
 
         private void FilterAnzeigen(string filter)
@@ -64,10 +67,16 @@ namespace TaskPlannerUI
         public event Action<RequestLoadTags> TagsViewRequested;
         public event Action<RequestAddTask> AddTaskRequested;
         public event Action<RequestUpdateTask> UpdateTaskRequested;
+       
 
         private void textBoxFilter_TextChanged(object sender, EventArgs e)
         {
-            TaskViewRequested(new RequestLoadFiltered(textBoxFilter.Text));
+            FilterTasks();
+        }
+
+        private void FilterTasks()
+        {
+            TaskViewRequested(new RequestLoadFiltered(textBoxFilter.Text, checkBoxIncludeDone.Checked));
         }
 
         private void tabControl1_SelectedIndexChanged(object sender, EventArgs e)
@@ -89,7 +98,7 @@ namespace TaskPlannerUI
         private void listBoxTags_SelectedIndexChanged(object sender, EventArgs e)
         {
             var selectetdTag = tagInfos[listBoxTags.SelectedIndex];
-            TaskViewRequested(new RequestLoadFiltered(selectetdTag.Tag));
+            TaskViewRequested(new RequestLoadFiltered(selectetdTag.Tag, true));
         }
 
         private void okButton_Click(object sender, EventArgs e)
@@ -104,20 +113,53 @@ namespace TaskPlannerUI
                 OnAddTaskRequested();
                 e.Handled = true;
             }
+            if (e.KeyChar == (char)Keys.Escape)
+            {
+                taskInfo = null;
+                aufgabenliste.SelectedIndex = -1;
+            }
         }
 
         private void OnAddTaskRequested()
         {
             if (string.IsNullOrEmpty(textBoxAufgabeneditor.Text))
                 return;
-            AddTaskRequested(new RequestAddTask(textBoxAufgabeneditor.Text));
+            if (taskInfo == null)
+            {
+                AddTaskRequested(new RequestAddTask(textBoxAufgabeneditor.Text));
+            }
+            else
+            {
+                UpdateTaskRequested(new RequestUpdateTask(taskInfo.Id, taskInfo.Done, textBoxAufgabeneditor.Text));
+            }
             textBoxAufgabeneditor.Clear();
         }
 
         private void aufgabenliste_MouseDoubleClick(object sender, MouseEventArgs e)
         {
-            var requestUpdateTask = new RequestUpdateTask(taskInfos[aufgabenliste.SelectedIndex].Id, !taskInfos[aufgabenliste.SelectedIndex].Done);
+            var requestUpdateTask = new RequestUpdateTask(taskInfos[aufgabenliste.SelectedIndex].Id, !taskInfos[aufgabenliste.SelectedIndex].Done, taskInfos[aufgabenliste.SelectedIndex].Text);
             UpdateTaskRequested(requestUpdateTask);
+        }
+
+        public void ShowError()
+        {
+            MessageBox.Show("Fehler");
+        }
+
+        private void aufgabenliste_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if(aufgabenliste.SelectedIndex == -1)
+                textBoxAufgabeneditor.Clear();
+            else
+            {
+                taskInfo = taskInfos[aufgabenliste.SelectedIndex];
+                textBoxAufgabeneditor.Text = taskInfo.Text;
+            }
+        }
+
+        private void checkBoxIncludeDone_CheckedChanged(object sender, EventArgs e)
+        {
+            FilterTasks();
         }
     }
 }

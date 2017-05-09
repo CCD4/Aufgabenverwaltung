@@ -1,46 +1,34 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Xml.Serialization;
 using TaskPlanner.Domain;
 
 namespace TaskPlanner.Storage
 {
-    public class XmlProvider
+    public class XmlProvider : IStorageProvider
     {
-        private const string FileName = "tasks.xml";
+        private readonly string fileName;
 
-        public Dictionary<string, int> LoadTags()
+        public XmlProvider() : this("tasks.xml")
         {
-            var tasks = LoadFromFile();
-            return CountTags(tasks);
         }
 
-        private static Dictionary<string, int> CountTags(List<Task> tasks)
+        internal XmlProvider(string fileName)
         {
-            var allTags = tasks.SelectMany(a => a.Tags);
-            var groupedTags = allTags.GroupBy(tag => tag);
-            return groupedTags.ToDictionary(grp => grp.Key, grp => grp.Count());
+            this.fileName = fileName;
         }
 
-        public Task[] LoadTasks(string[] tags)
-        {
-            IEnumerable<Task> tasks = LoadFromFile();
-            tasks = Filter(tasks, tags);
-            return tasks.ToArray();
-        }
 
-        private List<Task> LoadFromFile()
+        public List<Task> LoadTasks()
         {
             var ser = new XmlSerializer(typeof(List<Task>));
             List<Task> tasks;
 
             try
             {
-                using (var fileStream = File.OpenRead(FileName))
+                using (var fileStream = File.OpenRead(fileName))
                 {
-                    tasks = (List<Task>)ser.Deserialize(fileStream);
+                    tasks = (List<Task>) ser.Deserialize(fileStream);
                 }
             }
             catch (FileNotFoundException)
@@ -50,41 +38,14 @@ namespace TaskPlanner.Storage
             return tasks;
         }
 
-        private Task[] Filter(IEnumerable<Task> tasks, string[] tags)
-        {
-            if (tags.Length == 0)
-                return tasks.ToArray();
-            return tasks.Where(a => tags.All(t => a.Tags.Contains(t))).ToArray();
-        }
-
-        public void AddTask(Task taskToAdd)
-        {
-            var storage = LoadFromFile();
-            storage.Add(taskToAdd);
-            SaveTasks(storage);
-        }
-
-        private void SaveTasks(List<Task> tasks)
+        public void SaveTasks(List<Task> tasks)
         {
             var ser = new XmlSerializer(typeof(List<Task>));
-            using (var fileStream = File.Create(FileName))
+            using (var fileStream = File.Create(fileName))
             {
                 ser.Serialize(fileStream, tasks);
                 fileStream.Flush(true);
             }
-        }
-
-        public void UpdateTask(Guid taskId, bool done)
-        {
-            var storage = LoadFromFile();
-            UpdateTask(storage, taskId, done);
-            SaveTasks(storage);
-        }
-
-        private static void UpdateTask(List<Task> storage, Guid taskId, bool done)
-        {
-            var task = storage.First(t => t.Id == taskId);
-            task.Done = done;
         }
     }
 }

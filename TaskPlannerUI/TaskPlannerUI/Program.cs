@@ -33,17 +33,24 @@ namespace TaskPlannerUI
 
             taskPlannerMainForm.AddTaskRequested += request =>
             {
-                var reply = requestHandler.AddTask(request);
-                taskPlannerMainForm.ShowTasks(reply);
-            };
+                var result = requestHandler.AddTask(request);
+                if (result)
+                {
+                    var reply = requestHandler.LoadTasks(new RequestLoadFiltered("", true));
+                    taskPlannerMainForm.ShowTasks(reply);
+                }
+                else
+                    taskPlannerMainForm.ShowError();
 
+            };
+            
             taskPlannerMainForm.UpdateTaskRequested += request =>
             {
                 var reply = requestHandler.UpdateTask(request);
                 taskPlannerMainForm.ShowTasks(reply);
             };
 
-            var initialReply = requestHandler.LoadTasks(new RequestLoadFiltered(string.Empty));
+            var initialReply = requestHandler.LoadTasks(new RequestLoadFiltered(string.Empty, false));
             taskPlannerMainForm.ShowTasks(initialReply);
 
             Application.Run(taskPlannerMainForm);

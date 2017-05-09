@@ -16,7 +16,7 @@ namespace TaskPlanner.Presentation
             model.AddTaskRequested += request =>
             {
                 var reply = requestHandler.AddTask(request);
-                model.ShowTasks(reply);
+                //model.ShowTasks(reply);
             };
             window.DataContext = model;
             window.Show();
